@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámara Colombiana Del Abogado S.A.S.</title>
+    <style>
+        /* Estilos generales y Variables (Paleta Verde/Negro/Blanco) */
+        :root {
+            --primary-color: #112618; /* Verde muy oscuro, casi negro */
+            --secondary-color: #2b4d34; /* Verde institucional elegante */
+            --accent-color: #e8ede9; /* Gris verdoso muy claro para fondos */
+            --text-color: #1a1a1a; /* Negro suave para lectura */
+            --bg-color: #fcfcfc; /* Blanco de fondo */
+        }
+        
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Marca de agua general en toda la página con el logo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('CAMARA COLOMBIANA DEL ABOGADO_2.jpeg');
+            background-repeat: repeat;
+            background-size: 300px; 
+            opacity: 0.03; 
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4 { color: var(--primary-color); }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-align: center;
+            font-family: Cambria, Georgia, serif;
+        }
+        .btn:hover { background: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        /* Barra de Noticias (Ticker) */
+        .news-ticker {
+            background-color: #0a140d;
+            color: #e2e8f0;
+            padding: 8px 0;
+            font-size: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid var(--secondary-color);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .news-ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 45s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .news-item { margin-right: 50px; }
+        .news-item span { color: #8bc29d; font-weight: bold; margin-right: 5px; }
+
+        /* Botón Flotante de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float svg { width: 35px; height: 35px; fill: white; }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, #112618 0%, #2b4d34 100%);
+            color: #fff;
+            text-align: center;
+            padding: 60px 20px 80px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.2);
+        }
+        #hero h1 { font-size: 2.8em; margin-bottom: 5px; color: #fff; }
+        .nit-text { font-size: 1.2em; font-weight: bold; letter-spacing: 2px; margin-top: 0; margin-bottom: 25px; color: #e8ede9; }
+        .main-logo {
+            max-width: 250px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin: 0 auto 25px auto;
+            display: block;
+        }
+
+        /* Metodología de Trabajo */
+        .metodologia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .metodologia-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 4px;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .metodologia-card h3 { margin-top: 0; font-size: 1.5em; }
+
+        /* Servicios Detallados con Imágenes */
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 2.4em; border-bottom: 2px solid var(--accent-color); padding-bottom: 15px;}
+        .grid-servicios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: #fff; 
+            border-radius: 6px;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 20px rgba(0,0,0,0.12); border-color: var(--secondary-color); }
+        .card-img { width: 100%; height: 180px; object-fit: cover; }
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card h3 { font-size: 1.4em; margin-top: 0; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .card p { font-size: 1.05em; color: #333; }
+        .btn-saber-mas { margin-top: auto; width: 100%; box-sizing: border-box; font-size: 1em; padding: 10px; background: transparent; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .btn-saber-mas:hover { background: var(--secondary-color); color: #fff; }
+
+        /* Modales (Ventanas emergentes scrollables) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.7); 
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 40px;
+            border-radius: 6px;
+            width: 85%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            animation: fadeIn 0.3s;
+            font-size: 1.1em;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-btn {
+            color: #555; float: right; font-size: 32px; font-weight: bold; cursor: pointer;
+            position: sticky; top: -20px; right: 0; background: white; padding: 0 10px; border-radius: 5px;
+        }
+        .close-btn:hover { color: var(--primary-color); }
+        .modal-content ul { padding-left: 20px; }
+        .modal-content li { margin-bottom: 10px; }
+        .modal-content h4 { color: var(--secondary-color); margin-top: 25px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 1.3em;}
+
+        /* Normatividad Vigente */
+        .normatividad-section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 6px;
+            border: 1px solid var(--accent-color);
+            margin: 40px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .enlaces-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .enlace-ley {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .enlace-ley:hover { background: var(--secondary-color); color: #fff; }
+
+        /* IA Gemini Section */
+        #ia-section {
+            background: linear-gradient(135deg, #112618 0%, #2b4d34 100%);
+            color: #fff; padding: 40px 20px; border-radius: 6px; margin: 40px auto; text-align: center; box-shadow: 0 10px 25px rgba(17,38,24,0.3);
+        }
+        .ai-box { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 6px; max-width: 700px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.2); }
+        .ai-input { width: 100%; padding: 15px; border-radius: 4px; border: none; font-size: 1.1em; font-family: Cambria, serif; box-sizing: border-box; margin-bottom: 15px; }
+        #ai-response { margin-top: 20px; padding: 20px; background: #fff; color: var(--text-color); border-radius: 4px; display: none; text-align: left; border-left: 5px solid #8bc29d; }
+
+        /* Contacto, CTA y Mapa */
+        .cta-highlight {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 40px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 60px auto 30px;
+            max-width: 900px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .cta-highlight h2 { color: #fff; font-size: 2.2em; margin-top: 0; }
+        .cta-highlight p { font-size: 1.2em; max-width: 800px; margin: 0 auto 20px; }
+
+        .contact-info { text-align: center; font-size: 1.2em; margin-bottom: 40px; background: #fff; padding: 30px; border-radius: 6px; border: 1px solid var(--accent-color); max-width: 700px; margin: 0 auto 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        .map-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--accent-color);
+        }
+        
+        /* Footer y Sellos */
+        footer { background: #0a140d; color: #fff; text-align: center; padding: 50px 20px 20px; margin-top: 60px; position: relative; z-index: 1; }
+        .badges-container { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin: 30px 0; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NOTICIAS (TICKER) -->
+    <div class="news-ticker">
+        <div class="news-ticker-content">
+            <span class="news-item"><span>Nacional:</span> Corte Constitucional emite nuevas directrices sobre estabilidad laboral reforzada.</span>
+            <span class="news-item"><span>Internacional:</span> Novedades en los procesos de arbitraje comercial internacional para empresas.</span>
+            <span class="news-item"><span>Actualidad:</span> Reformas propuestas al Código de Procedimiento Administrativo y de lo Contencioso Administrativo.</span>
+            <span class="news-item"><span>Jurisprudencia:</span> Altas cortes unifican criterios sobre la liquidación de sociedades patrimoniales.</span>
+            <span class="news-item"><span>Servicios:</span> La Cámara Colombiana Del Abogado S.A.S. amplía su cobertura en canales digitales.</span>
+        </div>
+    </div>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/573043581332" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <!-- HERO (Logo principal actualizado y fondo limpio verde institucional) -->
+    <header id="hero">
+        <img src="CAMARA COLOMBIANA DEL ABOGADO_2.jpeg" alt="Logo Cámara Colombiana Del Abogado" class="main-logo">
+        <h1>Cámara Colombiana Del Abogado S A S</h1>
+        <p class="nit-text">NIT: 900.783.700</p>
+        <p>Te acompañamos en la resolución de tus conflictos jurídicos con soluciones claras, éticas y efectivas.</p>
+        <a href="#contacto" class="btn">Agendar Consulta</a>
+    </header>
+
+    <section class="container">
+        <!-- METODOLOGÍA DE TRABAJO -->
+        <div class="metodologia-grid">
+            <div class="metodologia-card">
+                <h3>📋 Consultoría Jurídica</h3>
+                <p>Análisis individual del caso, identificación de riesgos, alternativas jurídicas y definición de la estrategia a seguir.</p>
+            </div>
+            <div class="metodologia-card">
+                <h3>⚖️ Representación Judicial</h3>
+                <p>Acompañamiento y representación durante procesos judiciales, desde la preparación de la estrategia hasta las diferentes actuaciones procesales.</p>
+            </div>
+            <div class="metodologia-card">
+                <h3>🤝 Resolución de Conflictos</h3>
+                <p>Acompañamiento en negociaciones y conciliaciones para buscar soluciones jurídicas eficientes antes o durante un proceso judicial.</p>
+            </div>
+        </div>
+
+        <!-- IA GEMINI -->
+        <div id="ia-section">
+            <h2 style="color: white; margin-bottom: 10px;">Consulta Jurídica Asistida por IA</h2>
+            <div class="ai-box">
+                <input type="text" id="ai-input" class="ai-input" placeholder="Ej: Me despidieron sin justa causa, ¿qué debo hacer?">
+                <button class="btn" style="background-color: #fff; color: var(--primary-color);" onclick="simularConsultaIA()">Consultar a Gemini IA</button>
+                <div id="ai-response"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS JURÍDICOS (9 TARJETAS) -->
+    <section id="servicios" class="container">
+        <h2 class="section-title">Nuestras Áreas de Práctica</h2>
+        
+        <div class="grid-servicios">
+            <!-- 1. Administrativo -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1575505586569-646b2ca898fc?auto=format&fit=crop&w=600&q=80" alt="Derecho Administrativo" class="card-img">
+                <div class="card-content">
+                    <h3>🏛️ Derecho Administrativo</h3>
+                    <p>Asesoría y representación en asuntos de administración pública, entidades estatales y protección frente al Estado.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-administrativo')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 2. Laboral -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Derecho Laboral" class="card-img">
+                <div class="card-content">
+                    <h3>💼 Derecho Laboral</h3>
+                    <p>Protegemos los derechos de trabajadores, empleadores y contratistas en las etapas de la relación laboral.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-laboral')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 3. Civil (NUEVA IMAGEN EXCLUSIVA: MAZO DE JUEZ Y LIBROS) -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=600&q=80" alt="Derecho Civil" class="card-img">
+                <div class="card-content">
+                    <h3>🏠 Derecho Civil</h3>
+                    <p>Protección de derechos patrimoniales, obligaciones, contratos y relaciones entre particulares.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-civil')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 4. Familia -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80" alt="Derecho de Familia" class="card-img">
+                <div class="card-content">
+                    <h3>👨‍👩‍👧‍👦 Derecho de Familia</h3>
+                    <p>Acompañamos situaciones familiares con sensibilidad y soluciones legales claras, protegiendo a cada integrante.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-familia')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 5. Conciliaciones -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80" alt="Conciliaciones" class="card-img">
+                <div class="card-content">
+                    <h3>🤝 Conciliaciones</h3>
+                    <p>Facilitamos acuerdos legales, voluntarios y oportunos, evitando llegar a un desgaste judicial.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-conciliaciones')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 6. Inmobiliario -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Derecho Inmobiliario" class="card-img">
+                <div class="card-content">
+                    <h3>🏢 Derecho Inmobiliario</h3>
+                    <p>Trámites y protección legal para compraventas, arrendamientos y asuntos de vivienda para particulares.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-inmobiliario')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 7. Constitucional -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&w=600&q=80" alt="Derecho Constitucional" class="card-img">
+                <div class="card-content">
+                    <h3>⚖️ Constitucional y Tutelas</h3>
+                    <p>Soluciones rápidas y efectivas frente a la vulneración de derechos fundamentales y constitucionales.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-constitucional')">Ver detalles del servicio</button>
+                </div>
+            </div>
+
+            <!-- 8. Seguridad Social -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=600&q=80" alt="Seguridad Social" class="card-img">
+                <div class="card-content">
+                    <h3>🏥 Seguridad Social</h3>
+                    <p>Asesoría en pensiones, salud, riesgos laborales y controversias con EPS, AFP y ARL.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-seguridad')">Ver detalles del servicio</button>
+                </div>
+            </div>
+            
+            <!-- 9. Tránsito y Accidentes -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80" alt="Derecho de Tránsito y Accidentes" class="card-img">
+                <div class="card-content">
+                    <h3>🚗 Tránsito y Accidentes</h3>
+                    <p>Asesoría en accidentes, responsabilidad civil, impugnación de comparendos y reclamaciones ante aseguradoras.</p>
+                    <button class="btn btn-saber-mas" onclick="abrirModal('modal-transito')">Ver detalles del servicio</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NORMATIVIDAD VIGENTE EXTERNA -->
+    <section class="container">
+        <div class="normatividad-section">
+            <h2 style="margin-top: 0;">📚 Normatividad Vigente y Enlaces de Interés</h2>
+            <p>Acceso rápido a las fuentes oficiales de información jurídica y del estado en Colombia.</p>
+            <div class="enlaces-grid">
+                <a href="https://www.ramajudicial.gov.co/" target="_blank" class="enlace-ley">Rama Judicial de Colombia</a>
+                <a href="https://www.corteconstitucional.gov.co/" target="_blank" class="enlace-ley">Corte Constitucional</a>
+                <a href="http://www.secretariasenado.gov.co/leyes" target="_blank" class="enlace-ley">Leyes (Secretaría Senado)</a>
+                <a href="https://www.suin-juriscol.gov.co/" target="_blank" class="enlace-ley">SUIN - Juriscol</a>
+                <a href="https://www.mintrabajo.gov.co/" target="_blank" class="enlace-ley">Ministerio del Trabajo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALES DE LOS 9 SERVICIOS -->
+
+    <!-- Modal Administrativo -->
+    <div id="modal-administrativo" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-administrativo')">&times;</span>
+        <h2>🏛️ Derecho Administrativo</h2>
+        <p>Brindamos asesoría y representación jurídica en asuntos relacionados con la administración pública, las actuaciones de las entidades estatales y la protección de los derechos de los ciudadanos frente al Estado. Acompañamos tanto trámites administrativos como procesos judiciales ante la jurisdicción de lo contencioso administrativo.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Derechos de petición y solicitudes ante entidades públicas.</li>
+            <li>Recursos administrativos y actuaciones dentro de procedimientos administrativos.</li>
+            <li>Revocatoria directa de actos administrativos.</li>
+            <li>Silencio administrativo y sus efectos.</li>
+            <li>Asesoría en procesos sancionatorios administrativos.</li>
+            <li>Nulidad y restablecimiento del derecho.</li>
+            <li>Nulidad de actos administrativos.</li>
+            <li>Reparación directa por daños causados por entidades públicas.</li>
+            <li>Controversias contractuales con entidades estatales.</li>
+            <li>Responsabilidad del Estado.</li>
+            <li>Procesos relacionados con empleo público y carrera administrativa.</li>
+            <li>Asesoría sobre concursos de méritos, nombramientos y situaciones administrativas.</li>
+            <li>Reconocimiento y reclamación de derechos laborales de servidores públicos.</li>
+            <li>Defensa frente a actuaciones administrativas que afecten derechos particulares.</li>
+            <li>Acciones de tutela frente a vulneraciones de derechos fundamentales.</li>
+            <li>Acciones populares y de grupo, cuando resulte jurídicamente procedente.</li>
+            <li>Acompañamiento en conciliaciones extrajudiciales en asuntos administrativos.</li>
+            <li>Asesoría en contratación estatal y controversias derivadas de contratos públicos.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Laboral -->
+    <div id="modal-laboral" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-laboral')">&times;</span>
+        <h2>💼 Derecho Laboral</h2>
+        <p>Protegemos los derechos de trabajadores, empleadores y contratistas, brindando acompañamiento jurídico en las diferentes etapas de la relación laboral y en la solución de conflictos derivados del trabajo.</p>
+        <h4>Servicios para trabajadores:</h4>
+        <ul>
+            <li>Revisión y elaboración de contratos laborales (fijo, indefinido, obra o labor).</li>
+            <li>Liquidación de prestaciones sociales, cálculo de salarios, extras, recargos y descansos.</li>
+            <li>Cesantías, intereses a las cesantías, prima de servicios y vacaciones.</li>
+            <li>Indemnización por despido sin justa causa y reclamación de salarios adeudados.</li>
+            <li>Acoso laboral y estabilidad laboral reforzada.</li>
+            <li>Fuero de maternidad y protección durante el embarazo y la lactancia.</li>
+            <li>Incapacidades, accidentes y enfermedades laborales.</li>
+            <li>Terminación, liquidación del contrato y reclamaciones por diferencias en liquidaciones.</li>
+            <li>Asesoría frente a sanciones y llamados de atención.</li>
+            <li>Conciliaciones y Representación judicial en procesos laborales.</li>
+        </ul>
+        <h4>Servicios para empleadores:</h4>
+        <ul>
+            <li>Elaboración y revisión de contratos, documentos, reglamentos y políticas internas.</li>
+            <li>Revisión de liquidaciones y asesoría sobre terminación de contratos.</li>
+            <li>Procesos disciplinarios laborales.</li>
+            <li>Manejo jurídico de incapacidades, licencias y ausencias.</li>
+            <li>Prevención y atención de situaciones de acoso laboral.</li>
+            <li>Asesoría en seguridad social y obligaciones del empleador.</li>
+            <li>Acompañamiento en conciliaciones y procesos judiciales.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Civil -->
+    <div id="modal-civil" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-civil')">&times;</span>
+        <h2>🏠 Derecho Civil</h2>
+        <p>Ofrecemos asesoría para la protección de derechos patrimoniales, obligaciones, contratos y relaciones entre particulares, buscando soluciones jurídicas oportunas y adecuadas para cada caso.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Elaboración, revisión y terminación de contratos civiles.</li>
+            <li>Incumplimiento de contratos y cobro de obligaciones y deudas.</li>
+            <li>Responsabilidad civil contractual y extracontractual.</li>
+            <li>Reclamación de indemnizaciones por daños y perjuicios.</li>
+            <li>Contratos de compraventa y contratos de arrendamiento de vivienda/locales.</li>
+            <li>Conflictos entre arrendadores y arrendatarios, restitución de inmueble arrendado.</li>
+            <li>Incumplimiento de obligaciones, procesos ejecutivos y declarativos.</li>
+            <li>Prescripción y caducidad de acciones, según corresponda.</li>
+            <li>Asesoría en negocios jurídicos y obligaciones.</li>
+            <li>Conflictos relacionados con propiedad y posesión, pertenencia.</li>
+            <li>Protección de la propiedad y responsabilidad por daños causados a terceros.</li>
+            <li>Estudio y acompañamiento en procesos de sucesión.</li>
+            <li>Conciliaciones en conflictos civiles y patrimoniales.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Familia -->
+    <div id="modal-familia" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-familia')">&times;</span>
+        <h2>👨‍👩‍👧‍👦 Derecho de Familia</h2>
+        <p>Acompañamos jurídicamente situaciones familiares que requieren confianza, sensibilidad y soluciones legales claras, procurando proteger los derechos de cada integrante de la familia y, especialmente, los de niños, niñas y adolescentes.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Divorcio de matrimonio civil y cesación de efectos civiles de matrimonio religioso.</li>
+            <li>Separación de cuerpos y liquidación de sociedad conyugal.</li>
+            <li>Declaración de unión marital de hecho y liquidación de sociedad patrimonial.</li>
+            <li>Custodia, cuidado personal de hijos y regulación de visitas.</li>
+            <li>Fijación, aumento, disminución y exoneración de cuota alimentaria.</li>
+            <li>Cobro de cuotas alimentarias incumplidas y procesos ejecutivos de alimentos.</li>
+            <li>Filiación, reconocimiento, impugnación e investigación de paternidad/maternidad.</li>
+            <li>Permisos para salida del país de menores y procesos de adopción.</li>
+            <li>Patria potestad (privación o suspensión).</li>
+            <li>Sucesiones, liquidación de herencias, testamentos y planificación sucesoral.</li>
+            <li>Conflictos relacionados con bienes familiares.</li>
+            <li>Medidas de protección en situaciones de violencia intrafamiliar.</li>
+            <li>Conciliaciones en asuntos de familia.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Conciliaciones -->
+    <div id="modal-conciliaciones" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-conciliaciones')">&times;</span>
+        <h2>🤝 Conciliaciones</h2>
+        <p>Facilitamos la búsqueda de acuerdos legales, voluntarios y oportunos, evitando, cuando sea posible, que un conflicto tenga que llegar a un proceso judicial.</p>
+        <h4>Acompañamiento en conciliaciones sobre:</h4>
+        <ul>
+            <li>Asuntos laborales.</li>
+            <li>Conflictos civiles y contractuales.</li>
+            <li>Arrendamientos.</li>
+            <li>Incumplimiento de obligaciones y Responsabilidad civil.</li>
+            <li>Conflictos familiares (Cuotas alimentarias, Custodia y régimen de visitas).</li>
+            <li>Liquidación de sociedades conyugales y patrimoniales.</li>
+            <li>Unión marital de hecho y Conflictos patrimoniales.</li>
+            <li>Controversias susceptibles de conciliación en materia administrativa.</li>
+            <li>Elaboración y revisión de acuerdos conciliatorios.</li>
+            <li>Acompañamiento durante audiencias de conciliación.</li>
+            <li>Asesoría para determinar la viabilidad jurídica de un acuerdo.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Inmobiliario -->
+    <div id="modal-inmobiliario" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-inmobiliario')">&times;</span>
+        <h2>🏢 Derecho Inmobiliario y de Vivienda</h2>
+        <p>Especialmente enfocado en atender particulares para la protección y saneamiento de sus bienes raíces.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Compraventa de inmuebles y revisión de promesas de compraventa.</li>
+            <li>Elaboración y revisión de contratos en general.</li>
+            <li>Arrendamientos y Restitución de inmuebles.</li>
+            <li>Estudio de títulos.</li>
+            <li>Propiedad, posesión y procesos de pertenencia.</li>
+            <li>Conflictos entre propietarios.</li>
+            <li>Propiedad horizontal.</li>
+            <li>Problemas relacionados con vivienda y saneamiento de inmuebles.</li>
+            <li>Sucesiones y transferencia de bienes.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Constitucional -->
+    <div id="modal-constitucional" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-constitucional')">&times;</span>
+        <h2>⚖️ Derecho Constitucional y Tutelas</h2>
+        <p>Servicio indispensable para captar personas que necesitan una solución rápida frente a la vulneración de derechos fundamentales frente a entidades, empresas o el Estado.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Acciones de tutela.</li>
+            <li>Impugnación de fallos de tutela.</li>
+            <li>Derechos de petición.</li>
+            <li>Incidentes de desacato.</li>
+            <li>Protección de derechos fundamentales.</li>
+            <li>Acciones de cumplimiento.</li>
+            <li>Acciones populares.</li>
+            <li>Acciones de grupo.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Seguridad Social -->
+    <div id="modal-seguridad" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-seguridad')">&times;</span>
+        <h2>🏥 Derecho de Seguridad Social</h2>
+        <p>Un área vital que complementa nuestros servicios laborales, enfocada en proteger las garantías prestacionales y de salud de los ciudadanos.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Pensiones de vejez, invalidez y sobrevivientes.</li>
+            <li>Reconocimiento, reliquidación de pensiones e indemnización sustitutiva.</li>
+            <li>Devolución de saldos, estudio de historia laboral y semanas cotizadas.</li>
+            <li>Reclamos ante Colpensiones y fondos privados de pensiones.</li>
+            <li>Trámite y pago de Incapacidades.</li>
+            <li>Licencias de maternidad y paternidad.</li>
+            <li>Riesgos laborales y calificación de pérdida de capacidad laboral.</li>
+            <li>Controversias médicas y administrativas con EPS, AFP y ARL.</li>
+            <li>Acciones de tutela relacionadas con seguridad social y salud.</li>
+        </ul>
+    </div></div>
+
+    <!-- Modal Transito y Accidentes -->
+    <div id="modal-transito" class="modal"><div class="modal-content"><span class="close-btn" onclick="cerrarModal('modal-transito')">&times;</span>
+        <h2>🚗 Derecho de Tránsito y Accidentes</h2>
+        <p>Te acompañamos de manera diligente para resolver problemas derivados del tránsito. Brindamos asesoría en procesos administrativos, defensa y reclamaciones para garantizar la protección de tu patrimonio e integridad.</p>
+        <h4>Servicios:</h4>
+        <ul>
+            <li>Accidentes de tránsito.</li>
+            <li>Reclamaciones por daños materiales.</li>
+            <li>Indemnizaciones por lesiones.</li>
+            <li>Responsabilidad civil derivada de accidentes.</li>
+            <li>Comparendos y multas.</li>
+            <li>Impugnación de comparendos.</li>
+            <li>Procesos administrativos de tránsito.</li>
+            <li>Reclamaciones ante aseguradoras.</li>
+            <li>Asesoría relacionada con SOAT.</li>
+        </ul>
+    </div></div>
+
+    <!-- CTA DESTACADO Y CONTACTO -->
+    <section id="contacto" class="container">
+        
+        <div class="cta-highlight">
+            <h2>¿Necesitas asesoría jurídica?</h2>
+            <p>Cada situación tiene particularidades y requiere un análisis individual. Cuéntanos tu caso y recibe una orientación jurídica clara sobre las alternativas disponibles, los pasos a seguir y las acciones que pueden resultar procedentes de acuerdo con la legislación colombiana vigente.</p>
+            <p><strong>Agenda tu consulta y encuentra el respaldo jurídico que necesitas.</strong></p>
+            <a href="https://wa.me/573043581332" target="_blank" class="btn" style="background: #fff; color: var(--primary-color); margin-top: 15px;">Agendar consulta por WhatsApp</a>
+        </div>
+        
+        <div class="contact-info">
+            <p style="margin-bottom: 20px;">También puedes comunicarte a través de nuestros canales oficiales:</p>
+            <a href="https://wa.me/573043581332" target="_blank" class="whatsapp-link" style="color: #25D366; text-decoration: none;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                </svg>
+                +57 304 358 1332
+            </a>
+            <p style="margin-top: 15px;"><strong>Correo Electrónico:</strong> camacolabogados@gmail.com</p>
+            <p><strong>Oficina:</strong> CARRERA 7 # 33 - 29, Bogotá D.C.</p>
+        </div>
+
+        <!-- Integración de Google Maps -->
+        <div class="map-container">
+            <iframe 
+                width="100%" 
+                height="400" 
+                frameborder="0" 
+                scrolling="no" 
+                marginheight="0" 
+                marginwidth="0" 
+                src="https://maps.google.com/maps?q=Carrera%207%2033%2029%20Bogota&t=&z=16&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER / SELLOS -->
+    <footer>
+        <div class="container">
+            <h2 style="color: #fff; margin-bottom: 10px;">Protege tu tranquilidad con el respaldo legal adecuado</h2>
+            
+            <div class="badges-container">
+                <a href="https://colfirma.com/empresa/900783700" target="_blank" rel="noopener noreferrer">
+                    <img src="https://colfirma.com/sello/900783700" alt="CAMARA COLOMBIANA DEL ABOGADO S.A.S. NIT 900.783.700-1" height="40" style="border-radius: 4px;"/>
+                </a>
+                <img src="logo-urna.png" alt="Registro URNA" height="50" style="border-radius: 4px; background: white; padding: 5px;" onerror="this.style.display='none'">
+            </div>
+            <p>&copy; 2026 Cámara Colombiana Del Abogado S.A.S. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        function abrirModal(id) { document.getElementById(id).style.display = "block"; }
+        function cerrarModal(id) { document.getElementById(id).style.display = "none"; }
+        window.onclick = function(event) { if (event.target.className === "modal") { event.target.style.display = "none"; } }
+
+        function simularConsultaIA() {
+            const input = document.getElementById('ai-input').value;
+            const responseDiv = document.getElementById('ai-response');
+            if(input.trim() === "") { alert("Por favor, escribe una consulta jurídica primero."); return; }
+            responseDiv.style.display = "block";
+            responseDiv.innerHTML = "<strong>Gemini IA está analizando tu caso... ⏳</strong>";
+            setTimeout(() => {
+                responseDiv.innerHTML = `
+                    <strong>Orientación Preliminar IA:</strong><br><br>
+                    Respecto a tu consulta: <em>"${input}"</em>.<br><br>
+                    Bajo la legislación colombiana, esta situación requiere un análisis detallado de documentos y tiempos de prescripción. Te recomendamos agendar una consulta inmediata con nuestros especialistas para establecer las acciones procedentes.<br><br>
+                    <a href="https://wa.me/573043581332" target="_blank" style="color: var(--secondary-color); font-weight: bold;">👉 Clic aquí para contactar a un abogado ahora.</a>
+                `;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
